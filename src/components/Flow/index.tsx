@@ -1,23 +1,14 @@
 import { Button } from '@mui/material';
-import useHistory from 'hooks/useHistory';
-import { Key, useAllKeys, useAnyKeys } from 'hooks/usekeys';
 import { useCallback, useEffect } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import ReactFlow, {
-  Node,
-  useNodesState,
-  useEdgesState,
-  addEdge,
-  Connection,
-  Edge,
-  ConnectionLineType,
-  applyEdgeChanges,
-  applyNodeChanges,
+  addEdge, applyEdgeChanges,
+  applyNodeChanges, Edge, Node
 } from 'reactflow';
 import useUndoable from 'use-undoable';
 import CustomNode from './CustomNode';
 import styles from './Flow.module.css';
 import TextUpdaterNode from './TextUpdaterNode';
-import { useHotkeys } from 'react-hotkeys-hook'
 
 
 const initialNodes: Node[] = [
@@ -87,7 +78,7 @@ function Flow() {
   }, [elements]);
 
   const triggerUpdate = useCallback(
-    (t, v) => {
+    (t: any, v: any) => {
       // To prevent a mismatch of state updates,
       // we'll use the value passed into this
       // function instead of the state directly.
@@ -106,21 +97,21 @@ function Flow() {
   // handle the state updates.
 
   const onNodesChange = useCallback(
-    (changes) => {
+    (changes: any) => {
       triggerUpdate('nodes', applyNodeChanges(changes, elements.nodes));
     },
     [triggerUpdate, elements.nodes]
   );
 
   const onEdgesChange = useCallback(
-    (changes) => {
+    (changes: any) => {
       triggerUpdate('edges', applyEdgeChanges(changes, elements.edges));
     },
     [triggerUpdate, elements.edges]
   );
 
   const onConnect = useCallback(
-    (connection) => {
+    (connection: any) => {
       triggerUpdate('edges', addEdge(connection, elements.edges));
     },
     [triggerUpdate, elements.edges]
@@ -135,11 +126,11 @@ function Flow() {
       <Buttons undo={undo} redo={redo} reset={reset} />
       <ReactFlow
         nodes={nodes}
-        onNodesChange={(e) => {
+        onNodesChange={(e: any) => {
           console.log('onNodesChange', e);
           onNodesChange(e);
         }}
-        onChange={(e) => {
+        onChange={(e: any) => {
           console.log('onChange', e);
         }}
         edges={edges}
@@ -157,7 +148,7 @@ function Flow() {
 export default Flow;
 
 
-const Buttons = ({ undo, redo, reset }) => (
+const Buttons = ({ undo, redo, reset }: any) => (
   <div style={{ top: 16, right: 16, }} className='fixed top-16 right-16 flex flex-row'>
     <Button onClick={() => undo()}>Undo</Button>
     <Button onClick={() => redo()}>Redo</Button>

@@ -6,9 +6,9 @@ import { Handle, Position } from 'reactflow';
 
 const handleStyle = { padding: 3 };
 
-export default function TextUpdaterNode({ data }) {
+export default function TextUpdaterNode({ data }: any) {
 
-    const onChange = useCallback((evt) => {
+    const onChange = useCallback((evt: { target: { value: any; }; }) => {
         console.log(evt.target.value);
     }, []);
     const ctrlPress = useKeyPress("Control");
