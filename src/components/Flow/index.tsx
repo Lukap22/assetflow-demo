@@ -1,4 +1,7 @@
-import { useCallback } from 'react';
+import { Button } from '@mui/material';
+import useHistory from 'hooks/useHistory';
+import { Key, useAllKeys, useAnyKeys } from 'hooks/usekeys';
+import { useCallback, useEffect } from 'react';
 import ReactFlow, {
   Node,
   useNodesState,
@@ -7,10 +10,15 @@ import ReactFlow, {
   Connection,
   Edge,
   ConnectionLineType,
+  applyEdgeChanges,
+  applyNodeChanges,
 } from 'reactflow';
+import useUndoable from 'use-undoable';
 import CustomNode from './CustomNode';
-
 import styles from './Flow.module.css';
+import TextUpdaterNode from './TextUpdaterNode';
+import { useHotkeys } from 'react-hotkeys-hook'
+
 
 const initialNodes: Node[] = [
   {
@@ -29,52 +37,130 @@ const initialNodes: Node[] = [
     data: { label: 'Node 3' },
     position: { x: 400, y: 100 },
   },
+
   {
     id: '4',
     data: { label: 'Node 4' },
-    position: { x: 400, y: 200 },
+    position: { x: 100, y: 200 },
     type: 'custom',
     className: styles.customNode,
+  },
+  {
+    id: '5',
+    data: { label: 'Node 5' },
+    position: { x: 500, y: 300 },
+    type: 'textUpdater',
+  },
+  {
+    id: '6',
+    data: { label: 'Node 6' },
+    position: { x: 500, y: 500 },
   },
 ];
 
 const initialEdges: Edge[] = [
   { id: 'e1-2', source: '1', target: '2' },
   { id: 'e1-3', source: '1', target: '3' },
+  { id: 'e1-5', source: '3', target: '5' },
 ];
 
 const nodeTypes = {
   custom: CustomNode,
+  textUpdater: TextUpdaterNode
+
 };
 
 const defaultEdgeOptions = {
-  animated: true,
+  animated: false,
   type: 'smoothstep',
 };
 
 function Flow() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const onConnect = useCallback(
-    (params: Connection | Edge) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
+  const [elements, setElements, { undo, redo, reset }] = useUndoable({
+    nodes: initialNodes,
+    edges: initialEdges,
+  });
+  const { nodes, edges } = elements
+
+  useEffect(() => {
+    console.log(elements);
+  }, [elements]);
+
+  const triggerUpdate = useCallback(
+    (t, v) => {
+      // To prevent a mismatch of state updates,
+      // we'll use the value passed into this
+      // function instead of the state directly.
+      setElements(e => ({
+        nodes: t === 'nodes' ? v : e.nodes,
+        edges: t === 'edges' ? v : e.edges,
+      }));
+    },
+    [setElements]
   );
+
+
+  // We declare these callbacks as React Flow suggests,
+  // but we don't set the state directly. Instead, we pass
+  // it to the triggerUpdate function so that it alone can
+  // handle the state updates.
+
+  const onNodesChange = useCallback(
+    (changes) => {
+      triggerUpdate('nodes', applyNodeChanges(changes, elements.nodes));
+    },
+    [triggerUpdate, elements.nodes]
+  );
+
+  const onEdgesChange = useCallback(
+    (changes) => {
+      triggerUpdate('edges', applyEdgeChanges(changes, elements.edges));
+    },
+    [triggerUpdate, elements.edges]
+  );
+
+  const onConnect = useCallback(
+    (connection) => {
+      triggerUpdate('edges', addEdge(connection, elements.edges));
+    },
+    [triggerUpdate, elements.edges]
+  );
+
+  useHotkeys('ctrl+z', undo, [undo]);
+  useHotkeys('ctrl+shift+z', redo, [redo]);
+
 
   return (
     <div className={styles.flow}>
+      <Buttons undo={undo} redo={redo} reset={reset} />
       <ReactFlow
         nodes={nodes}
-        onNodesChange={onNodesChange}
+        onNodesChange={(e) => {
+          console.log('onNodesChange', e);
+          onNodesChange(e);
+        }}
+        onChange={(e) => {
+          console.log('onChange', e);
+        }}
         edges={edges}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
-        connectionLineType={ConnectionLineType.SmoothStep}
         fitView
+      // style={rfStyle}
       />
     </div>
   );
 }
 
 export default Flow;
+
+
+const Buttons = ({ undo, redo, reset }) => (
+  <div style={{ top: 16, right: 16, }} className='fixed top-16 right-16 flex flex-row'>
+    <Button onClick={() => undo()}>Undo</Button>
+    <Button onClick={() => redo()}>Redo</Button>
+    <Button onClick={() => reset()}>Reset</Button>
+  </div>
+);
