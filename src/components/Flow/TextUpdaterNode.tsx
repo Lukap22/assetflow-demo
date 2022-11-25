@@ -1,4 +1,4 @@
-import { Paper, Stack, TextField } from '@mui/material';
+import { Button, Grid, Paper, Stack, TextField } from '@mui/material';
 import ActionDialog2 from 'components/mui/ActionDialog2';
 import { useKeyPress } from 'hooks/useKeyPress';
 import { useCallback, useState } from 'react';
@@ -13,8 +13,10 @@ export default function TextUpdaterNode({ data }: any) {
     }, []);
     const ctrlPress = useKeyPress("Control");
     const [openDialog, setOpenDialog] = useState(false);
+    const [openDialog2, setOpenDialog2] = useState(false);
     const [value, setValue] = useState(data.label);
     const handleCloseDialog = () => setOpenDialog(false);
+    const handleCloseDialog2 = () => setOpenDialog2(false);
 
     return (
         <>
@@ -29,10 +31,22 @@ export default function TextUpdaterNode({ data }: any) {
                 </div>
 
             </Paper>
-            <ActionDialog2 actions={undefined} open={openDialog} onClose={handleCloseDialog} >
+            <ActionDialog2 fullScreen={true} actions={<><Button onClick={() => { console.log("nested node clicked"); setOpenDialog2(true) }}>open nested dialog</Button><Button onClick={handleCloseDialog}>close</Button> </>} open={openDialog} onClose={handleCloseDialog} >
                 <Stack p={2}>
                     <TextField value={value} onChange={(e) => setValue(e.target.value)} />
                 </Stack>
+
+                <ActionDialog2 fullScreen={true} actions={<><Button onClick={handleCloseDialog2}>close nested</Button> </>} open={openDialog2} onClose={handleCloseDialog2} >
+                    <Stack justifyContent="center" sx={{ height: "100%" }}>
+                        <Stack p={2} direction="column"
+                            justifyContent="center"
+                            alignItems="center"
+                            spacing={2}>
+                            <div> nested dialog </div>
+                        </Stack>
+                    </Stack>
+
+                </ActionDialog2>
             </ActionDialog2>
         </>
 
