@@ -1,6 +1,15 @@
-import Flow from 'components/Flow';
-import SideNavBarLayout from 'layouts/SideNavBarLayout';
-import { ReactElement } from 'react';
+import Flow from 'components/flow';
+import {GetStaticProps} from "next";
+import {getTranslation} from "../util/i18n";
+
+export const getStaticProps: GetStaticProps = async function getStaticProps({ locale }) {
+    const translations = await getTranslation(locale, ['common', 'nav']);
+    return {
+        props: {
+            ...translations,
+        }
+    }
+}
 
 export default function FlowPage() {
     return (

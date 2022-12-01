@@ -13,9 +13,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import { MainSideBarNavItems } from 'components/MainSideBarNavItems';
 import { useRouter } from 'next/router';
 import * as React from 'react';
+import MainSideBarNavItems from "../components/MainSideBarNavItems";
 
 const drawerWidth: number = 240;
 
@@ -45,11 +45,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-
 const CollapsedRoutes = [
     "/flow"
 ]
-
 
 function SideNavBarLayout({ children }: { children: React.ReactNode }) {
     //Hooks
@@ -67,7 +65,6 @@ function SideNavBarLayout({ children }: { children: React.ReactNode }) {
     React.useEffect(() => {
         setOpen(!CollapsedRoutes.includes(pathname))
     }, [pathname])
-
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -93,7 +90,6 @@ function SideNavBarLayout({ children }: { children: React.ReactNode }) {
                             <MenuIcon />
                         </IconButton>
                     )}
-
                 </Toolbar>
                 <Divider />
                 <List component="nav">
@@ -103,7 +99,6 @@ function SideNavBarLayout({ children }: { children: React.ReactNode }) {
                 <Box mt="auto" sx={{}}>
                     <Divider />
                     <ListItemButton>
-
                         <ListItemIcon>
                             <DashboardIcon />
                         </ListItemIcon>
@@ -126,10 +121,6 @@ function SideNavBarLayout({ children }: { children: React.ReactNode }) {
             <Box
                 component="main"
                 sx={{
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === 'light'
-                            ? theme.palette.grey[100]
-                            : theme.palette.grey[900],
                     flexGrow: 1,
                     height: '100vh',
                     overflow: 'auto',

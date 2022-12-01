@@ -1,20 +1,22 @@
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeOptions, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import breakpoints from 'theme/breakpoints';
+import useDarkMode from "../hooks/useDarkMode";
 
 export default function ThemeProvider({ children }: { children: ReactNode }) {
-    // Darkmode hook
-    const isLight = true;
+
+   const {isDarkMode} = useDarkMode()
 
     const themeOptions: ThemeOptions = useMemo(
         () => ({
-            //   palette: isLight ? palette.light : palette.dark,
+            palette: {
+                mode: isDarkMode ? "dark" : "light",
+            },
             breakpoints,
             shape: { borderRadius: 8 },
-            // shadows: isLight ? shadows.light : shadows.dark,
         }),
-        [isLight]
+        [isDarkMode]
     );
 
     const theme = createTheme(themeOptions);

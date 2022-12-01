@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+LC_ALL=C
+
+local_branch="$(git rev-parse --abbrev-ref HEAD)"
+check_branches=(develop staging)
+
+if [[ ${check_branches[*]} =~ $local_branch ]];
+then
+	echo -e "\033[1;36m$local_branch is a build error free branch, so we have to run 'npm run build' first to push! \033[0m"
+	npm run build;
+fi
+
+exit 0
+

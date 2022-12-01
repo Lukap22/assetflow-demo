@@ -23,6 +23,7 @@ export default function GlobalToastSettings() {
             toastOptions={{
                 // Define default options
                 className: '',
+
                 duration: 5000,
                 style: {
                     background: '#363636',
@@ -31,10 +32,7 @@ export default function GlobalToastSettings() {
                 // Default options for specific types
                 success: {
                     duration: 3000,
-                    theme: {
-                        primary: 'green',
-                        secondary: 'black',
-                    },
+
                 },
             }}
         />)
