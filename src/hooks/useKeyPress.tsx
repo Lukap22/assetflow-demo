@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 type ModifierKeys = "Alt" | "AltGraph" | "CapsLock" | "Control" | "Fn" | "FnLock" | "Hyper" | "Meta" | "NumLock" | "ScrollLock" | "Shift" | "Super" | "Symbol" | "SymbolLock";
 type WhitespaceKeys = "Enter" | "Tab" | " ";
 type NavigationKeys = "ArrowDown" | "ArrowLeft" | "ArrowRight" | "ArrowUp" | "End" | "Home" | "PageDown" | "PageUp";
@@ -6,8 +7,6 @@ type FunctionKeys = "F1" | "F2" | "F3" | "F4" | "F5" | "F6" | "F7" | "F8" | "F9"
 type NumericKeypadKeys = "Decimal" | "Key11" | "Key12" | "Multiply" | "Add" | "Clear" | "Divide" | "Subtract" | "Separator" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
 
 type Key = string | ModifierKeys | WhitespaceKeys | NavigationKeys | FunctionKeys | NumericKeypadKeys;
-
-
 
 /**
  * This hook allows you to detect when a key is pressed.

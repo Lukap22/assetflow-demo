@@ -122,7 +122,11 @@ function Flow() {
 
 
   return (
-    <div className={styles.flow}>
+    <div className={styles.flow} style={{
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+    }}>
       <Buttons undo={undo} redo={redo} reset={reset} />
       <ReactFlow
         nodes={nodes}
