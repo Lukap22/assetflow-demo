@@ -4,7 +4,7 @@
 LC_ALL=C
 
 local_branch="$(git rev-parse --abbrev-ref HEAD)"
-check_branches=(develop staging)
+check_branches=(develop staging main)
 
 if [[ ${check_branches[*]} =~ $local_branch ]];
 then
