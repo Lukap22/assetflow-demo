@@ -6,12 +6,12 @@ import "../styles/globals.css";
 
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
-import ProgressBar from 'components/ProgressBar';
+import ProgressBar from '@components/ProgressBar';
 import Head from "next/head";
-import GlobalToastSettings from 'components/GlobalToastSettings';
+import GlobalToastSettings from '@components/GlobalToastSettings';
 import { useRouter } from 'next/router';
-import SideNavBarLayout from 'layouts/SideNavBarLayout';
-import ThemeProvider from 'contexts/ThemeProviderContext';
+import SideNavBarLayout from '@layouts/SideNavBarLayout';
+import ThemeProvider from '@contexts/ThemeProviderContext';
 import {appWithTranslation} from 'next-i18next'
 import {I18nextProvider} from "react-i18next";
 

@@ -1,4 +1,4 @@
-import Flow from 'components/flow';
+import Flow from '@components/flow';
 import {GetStaticProps} from "next";
 import {getTranslation} from "../util/i18n";
 
