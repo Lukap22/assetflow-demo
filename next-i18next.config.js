@@ -3,7 +3,6 @@ module.exports = {
     i18n: {
         defaultLocale: 'nl',
         locales: ['en', 'nl'],
-        fallbackLng: ["nl"],
         ...(typeof window === undefined
             ? { localePath: path.resolve('./public/locales') }
             : {}),
