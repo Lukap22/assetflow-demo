@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": false,
     "noImplicitAny": false,
@@ -19,38 +15,18 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "baseUrl": "./src/",
+    "baseUrl": "./src",
     "paths": {
-      "@assets/*": [
-        "/assets/*"
-      ],
-      "@components/*": [
-        "components/*"
-      ],
-      "@contexts/*": [
-        "contexts/*"
-      ],
-      "@layouts/*": [
-        "layouts/*"
-      ],
-      "@hooks/*": [
-        "hooks/*"
-      ],
-      "@types/*": [
-        "types/*"
-      ],
-      "@utils/*": [
-        "/utils/*"
-      ]
+      "@assets/*": ["/assets/*"],
+      "@components/*": ["/components/*"],
+      "@contexts/*": ["/contexts/*"],
+      "@layouts/*": ["/layouts/*"],
+      "@hooks/*": ["/hooks/*"],
+      "@types/*": ["/types/*"],
+      "@utils/*": ["/utils/*"]
     },
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

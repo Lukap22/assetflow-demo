@@ -1,9 +1,9 @@
-import Flow from '@components/flow'
-import {ReactElement} from 'react'
-import type {NextPageWithLayout} from './_app'
-import {appWithTranslation, useTranslation} from "next-i18next";
-import {getTranslation} from "../util/i18n";
-import {GetStaticProps} from "next";
+import Flow from '@components/flow-temp'
+import { ReactElement } from 'react'
+import type { NextPageWithLayout } from './_app'
+import { appWithTranslation, useTranslation } from "next-i18next";
+import { getTranslation } from "../util/i18n";
+import { GetStaticProps } from "next";
 
 export const getStaticProps: GetStaticProps = async function getStaticProps({ locale }) {
   const translations = await getTranslation(locale, ['common', 'nav']);

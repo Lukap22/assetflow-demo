@@ -12,8 +12,8 @@ import GlobalToastSettings from '@components/GlobalToastSettings';
 import { useRouter } from 'next/router';
 import SideNavBarLayout from '@layouts/SideNavBarLayout';
 import ThemeProvider from '@contexts/ThemeProviderContext';
-import {appWithTranslation} from 'next-i18next'
-import {I18nextProvider} from "react-i18next";
+import { appWithTranslation } from 'next-i18next'
+import { I18nextProvider } from "react-i18next";
 
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -55,4 +55,4 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   )
 }
 
-export default appWithTranslation(MyApp)
+export default MyApp

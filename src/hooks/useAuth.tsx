@@ -1,7 +1,8 @@
-import {useState} from "react";
+import { useState } from "react";
 
-export default function useAuth(){
+export default function useAuth() {
     const [user, setUser] = useState()
 
-    return {user, setUser}
+    return { user, setUser }
 }
+

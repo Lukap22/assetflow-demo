@@ -1,6 +1,6 @@
 import type { PlaywrightTestConfig } from "@playwright/test";
 import { devices } from "@playwright/test";
-import {storageStatePathByRole} from "./global-setup";
+import { storageStatePathByRole } from "./global-setup";
 // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 // dotenv.config();
 // console.log(process.env);
@@ -23,12 +23,17 @@ import {storageStatePathByRole} from "./global-setup";
 const config: PlaywrightTestConfig = {
   globalSetup: require.resolve("./global-setup"), //use auth state from previous test
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  // Builds webserver and runs tests against it with github actions.
+  webServer: {
+    command: "npm run restart",
+    url: "http://localhost:3000/nl",
+  },
   use: {
     // Tell all tests to load signed-in state from 'storageState.json'.
     storageState: storageStatePathByRole("administrator"),
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "http://localhost:3000",
-    headless: true,
+    baseURL: "http://localhost:3000/nl",
+    headless: false,
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
@@ -44,7 +49,7 @@ const config: PlaywrightTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000
+    timeout: 5000,
   },
   /* Run tests in files in parallel */
   fullyParallel: false,
@@ -63,20 +68,20 @@ const config: PlaywrightTestConfig = {
       use: {
         ...devices["Desktop Chrome"],
       },
-    // },
-    //
-    // {
-    //   name: "firefox",
-    //   use: {
-    //     ...devices["Desktop Firefox"],
-    //   },
-    // },
-    //
-    // {
-    //   name: "webkit",
-    //   use: {
-    //     ...devices["Desktop Safari"],
-    //   },
+      // },
+      //
+      // {
+      //   name: "firefox",
+      //   use: {
+      //     ...devices["Desktop Firefox"],
+      //   },
+      // },
+      //
+      // {
+      //   name: "webkit",
+      //   use: {
+      //     ...devices["Desktop Safari"],
+      //   },
     },
 
     /* Test against mobile viewports. */

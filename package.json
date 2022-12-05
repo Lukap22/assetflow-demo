@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "restart": "npm run build && next start",
     "lint": "next lint",
-    "test": "playwright test --config=tests/playwright.config.ts"
+    "test:e2e": "playwright test --config=./tests/playwright.config.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
