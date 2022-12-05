@@ -1,4 +1,4 @@
-import Flow from '@components/flow-temp'
+import Flow from '@components/flow'
 import { ReactElement } from 'react'
 import type { NextPageWithLayout } from './_app'
 import { appWithTranslation, useTranslation } from "next-i18next";
